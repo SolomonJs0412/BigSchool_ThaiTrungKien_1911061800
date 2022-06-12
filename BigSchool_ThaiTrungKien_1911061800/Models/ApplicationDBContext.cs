@@ -10,7 +10,9 @@ namespace BigSchool_ThaiTrungKien_1911061800.Models
     public class ApplicationDBContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Category> Categories { get; set; } 
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
+        
         public ApplicationDBContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -19,6 +21,15 @@ namespace BigSchool_ThaiTrungKien_1911061800.Models
         public static ApplicationDBContext Create()
         {
             return new ApplicationDBContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Attendance>()
+                .HasRequired(a => a.Course)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

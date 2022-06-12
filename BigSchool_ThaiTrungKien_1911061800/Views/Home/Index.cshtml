@@ -4,8 +4,30 @@
 }
 
 <div class="container">
+
+    <style type="text/css">
+        #ul{
+            list-style: none;
+        }
+        #date {
+            text-align: center;
+            background-color: #d41d50;
+            color: white;
+            width: 60px;
+            border-radius: 8px;
+        }
+        #li {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        #details {
+            position: absolute;
+            top: 0;
+            left: 70px;
+        }
+    </style>
     <div class="row">
-        <ul>
+        <ul id="ul">
             @foreach (var course in Model)
             {
                 <li>
@@ -14,7 +36,29 @@
             }
         </ul>
     </div>
-
+    <ul class="course" id="ul">
+        @foreach (var course in Model)
+        {
+            <li id="li">
+                <div class="row" id="date">
+                    <div class="month">
+                        @course.DateTime.ToString("MM")
+                    </div>
+                    <div class="day">
+                        @course.DateTime.ToString("dd")
+                    </div>
+                </div>
+                <div class="details" id="details">
+                    <span class="lecturer">
+                        @course.Lecturer.Name
+                    </span>
+                    <span class="category">
+                        @course.Category.Name
+                    </span>
+                </div>
+            </li>
+        }
+    </ul>
     <div class="jumbotron">
         <h1>ASP.NET</h1>
         <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
