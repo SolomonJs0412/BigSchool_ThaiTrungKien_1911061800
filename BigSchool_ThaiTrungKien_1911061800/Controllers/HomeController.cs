@@ -1,16 +1,29 @@
-﻿using System;
+﻿using BigSchool_ThaiTrungKien_1911061800.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
-namespace BigSchool_ThaiTrungKien_1911061800.Controllers
+namespace LabBigSchool_TruongTheHao.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDBContext _dbContext;
+
+        public HomeController()
+        {
+            _dbContext = new ApplicationDBContext();
+        }
         public ActionResult Index()
         {
-            return View();
+            var upcomingCourses = _dbContext.Courses
+                .Include(c => c.Lecturer)
+                .Include(c => c.Category)
+                .Where(c => c.DateTime > DateTime.Now);
+
+            return View(upcomingCourses);
         }
 
         public ActionResult About()
