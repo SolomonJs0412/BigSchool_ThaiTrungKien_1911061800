@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BigSchool_ThaiTrungKien_1911061800.Models.Course>
+﻿@model BigSchool_ThaiTrungKien_1911061800.ViewModels.CourseViewModel
 @{
     ViewBag.Title = "Home Page";
 }
@@ -26,7 +26,7 @@
             left: 70px;
         }
     </style>
-    <div class="row">
+    @*<div class="row">
         <ul id="ul">
             @foreach (var course in Model)
             {
@@ -35,9 +35,9 @@
                 </li>
             }
         </ul>
-    </div>
+    </div>*@
     <ul class="course" id="ul">
-        @foreach (var course in Model)
+        @foreach (var course in Model.UpcommingCourses)
         {
             <li id="li">
                 <div class="row" id="date">
@@ -51,11 +51,20 @@
                 <div class="details" id="details">
                     <span class="lecturer">
                         @course.Lecturer.Name
+                        @if (Model.ShowAction)
+                        {
+                          <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm js-toggle-follow">Follow</button>
+                        }
+
                     </span>
                     <span class="category">
                         @course.Category.Name
                     </span>
-                    <button  data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
+                    @if (Model.ShowAction)
+                {
+                        <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
+                }
+                    
                 </div>
             </li>
         }
@@ -75,6 +84,17 @@
                         })
                         .fail(function () {
                             alert("something failed");
+                        });
+                });
+
+                $(".js-toggle-follow").click(function (e) {
+                    var button = $(e.target);
+                    $.post("/api/followings", { followeeId: button.attr("data-user-id") })
+                        .done(function () {
+                            button.text("Following");
+                        })
+                        .fail(function () {
+                            alert("Something failed");
                         });
                 });
             });
