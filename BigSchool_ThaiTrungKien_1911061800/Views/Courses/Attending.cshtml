@@ -1,15 +1,17 @@
 ﻿@model BigSchool_ThaiTrungKien_1911061800.ViewModels.CourseViewModel
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Attending";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Home</h2>
 <div class="container">
 
     <style type="text/css">
-        #ul{
+        #ul {
             list-style: none;
         }
+
         #date {
             text-align: center;
             background-color: #d41d50;
@@ -17,10 +19,12 @@
             width: 60px;
             border-radius: 8px;
         }
+
         #li {
             position: relative;
             margin-bottom: 30px;
         }
+
         #details {
             position: absolute;
             top: 0;
@@ -28,15 +32,15 @@
         }
     </style>
     @*<div class="row">
-        <ul id="ul">
-            @foreach (var course in Model)
-            {
-                <li>
-                    @course.DateTime - @course.Lecturer.Name
-                </li>
-            }
-        </ul>
-    </div>*@
+            <ul id="ul">
+                @foreach (var course in Model)
+                {
+                    <li>
+                        @course.DateTime - @course.Lecturer.Name
+                    </li>
+                }
+            </ul>
+        </div>*@
     <ul class="course" id="ul">
         @foreach (var course in Model.UpcommingCourses)
         {
@@ -54,7 +58,7 @@
                         @course.Lecturer.Name
                         @if (Model.ShowAction)
                         {
-                          <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm js-toggle-follow">Follow</button>
+                            <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm js-toggle-follow">Follow</button>
                         }
 
                     </span>
@@ -62,10 +66,10 @@
                         @course.Category.Name
                     </span>
                     @if (Model.ShowAction)
-                {
+                    {
                         <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
-                }
-                    
+                    }
+
                 </div>
             </li>
         }
