@@ -20,6 +20,7 @@ namespace BigSchool_ThaiTrungKien_1911061800.Controllers
             _dbContext = new ApplicationDBContext();
         }
         [HttpGet]
+        [Authorize]
         public ActionResult Create()
         {
             var viewModel = new CourseViewModel
